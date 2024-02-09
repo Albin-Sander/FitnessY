@@ -13,11 +13,15 @@ class HealthStore {
     var stepsy = 0
     var exerciseMin = 0
     var calories = 0
+    var exerciseMinGoal = 0
+    var progress = 0
+    var standHour = 0
 
     private let healthStore = HKHealthStore()
     private let stepType = HKObjectType.quantityType(forIdentifier: .stepCount)!
     private let exerciseType = HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!
     private let activeEnergyType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!
+    private let standHourType = HKObjectType.categoryType(forIdentifier: .appleStandHour)!
 
     func requestAccess() async throws {
         guard HKHealthStore.isHealthDataAvailable() else {
@@ -25,19 +29,24 @@ class HealthStore {
         }
 
         return try await withCheckedThrowingContinuation { continuation in
-            healthStore.requestAuthorization(toShare: nil, read: [stepType, exerciseType, activeEnergyType]) { success, error in
+            healthStore.requestAuthorization(toShare: nil, read: [stepType, exerciseType, activeEnergyType, standHourType, HKObjectType.activitySummaryType()]) { success, error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else if success {
                     self.fetchData()
+                    self.fetchActivitySummary()
                     self.setupObserverQueries()
+                    
                     continuation.resume()
+                    
                 } else {
                     continuation.resume(throwing: NSError(domain: "HealthKit", code: 2, userInfo: [NSLocalizedDescriptionKey: "Authorization denied."]))
                 }
             }
         }
     }
+    
+    
 
     private func fetchData() {
         let calendar = Calendar.current
@@ -85,10 +94,56 @@ class HealthStore {
                // Store activeEnergyBurned in a property of your class
                calories = Int(activeEnergyBurned)
            }
+        
+        let standHourType = HKObjectType.categoryType(forIdentifier: .appleStandHour)!
+        let standHourQuery = HKSampleQuery(sampleType: standHourType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { [self] (query, samples, error) in
+               guard let samples = samples as? [HKCategorySample] else {
+                   print("Failed to fetch stand hours: \(error?.localizedDescription ?? "Unknown error")")
+                   return
+               }
+
+               let standHours = samples.filter { $0.value == HKCategoryValueAppleStandHour.stood.rawValue }.count
+               print("Stand hours today: \(standHours)")
+               standHour = standHours
+               // Store standHours in a property of your class
+           }
 
         healthStore.execute(stepQuery)
         healthStore.execute(exerciseQuery)
         healthStore.execute(activeEnergyQuery)
+        healthStore.execute(standHourQuery)
+        
+        
+       
+    }
+    
+    
+    private func fetchActivitySummary() {
+        let calendar = Calendar.current
+        var components = calendar.dateComponents([.year, .month, .day], from: Date())
+        
+        // Associate the components with a calendar
+        components.calendar = calendar
+        
+        let predicate = HKQuery.predicateForActivitySummary(with: components)
+        
+        let query = HKActivitySummaryQuery(predicate: predicate) { [self] query, summaries, error in
+            guard let summaries = summaries, let summary = summaries.first else {
+                print("Failed to fetch activity summary: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+            
+            let exerciseGoal = summary.activeEnergyBurnedGoal.doubleValue(for: HKUnit.kilocalorie())
+            let exerciseProgress = summary.activeEnergyBurned.doubleValue(for: HKUnit.kilocalorie())
+            
+            print("Exercise goal: \(exerciseGoal) kcal")
+            exerciseMinGoal = Int(exerciseGoal)
+            print("Exercise progress: \(exerciseProgress) kcal")
+          
+            print("hej", progress)
+        }
+        
+        healthStore.execute(query)
     }
 
     private func setupObserverQueries() {
