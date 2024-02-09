@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		B11461342B75720000C438CE /* CircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B11461332B75720000C438CE /* CircleView.swift */; };
+		B144CB992B7680850060E7E4 /* TabNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B144CB982B7680850060E7E4 /* TabNavigation.swift */; };
+		B144CB9B2B7680FC0060E7E4 /* Workouts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B144CB9A2B7680FC0060E7E4 /* Workouts.swift */; };
+		B144CB9E2B7681910060E7E4 /* WorkoutDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B144CB9D2B7681910060E7E4 /* WorkoutDataFetcher.swift */; };
 		B1ED822B2B7419C300D7B990 /* FitnessYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED822A2B7419C300D7B990 /* FitnessYApp.swift */; };
 		B1ED822D2B7419C300D7B990 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ED822C2B7419C300D7B990 /* ContentView.swift */; };
 		B1ED822F2B7419CF00D7B990 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1ED822E2B7419CF00D7B990 /* Assets.xcassets */; };
@@ -19,6 +22,9 @@
 
 /* Begin PBXFileReference section */
 		B11461332B75720000C438CE /* CircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleView.swift; sourceTree = "<group>"; };
+		B144CB982B7680850060E7E4 /* TabNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabNavigation.swift; sourceTree = "<group>"; };
+		B144CB9A2B7680FC0060E7E4 /* Workouts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workouts.swift; sourceTree = "<group>"; };
+		B144CB9D2B7681910060E7E4 /* WorkoutDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDataFetcher.swift; sourceTree = "<group>"; };
 		B1ED82272B7419C300D7B990 /* FitnessY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitnessY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1ED822A2B7419C300D7B990 /* FitnessYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessYApp.swift; sourceTree = "<group>"; };
 		B1ED822C2B7419C300D7B990 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -42,6 +48,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B144CB9C2B76817B0060E7E4 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B144CB9D2B7681910060E7E4 /* WorkoutDataFetcher.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		B1ED821E2B7419C300D7B990 = {
 			isa = PBXGroup;
 			children = (
@@ -61,6 +75,7 @@
 		B1ED82292B7419C300D7B990 /* FitnessY */ = {
 			isa = PBXGroup;
 			children = (
+				B144CB9C2B76817B0060E7E4 /* Data */,
 				B1ED823F2B74205800D7B990 /* Screens */,
 				B1ED823C2B741E7600D7B990 /* Views */,
 				B1ED823B2B741BC500D7B990 /* FitnessY.entitlements */,
@@ -87,6 +102,7 @@
 			children = (
 				B1ED823D2B741E8200D7B990 /* CardView.swift */,
 				B11461332B75720000C438CE /* CircleView.swift */,
+				B144CB982B7680850060E7E4 /* TabNavigation.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -95,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				B1ED82402B74206600D7B990 /* Home.swift */,
+				B144CB9A2B7680FC0060E7E4 /* Workouts.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -175,6 +192,9 @@
 				B1ED82412B74206600D7B990 /* Home.swift in Sources */,
 				B1ED823E2B741E8200D7B990 /* CardView.swift in Sources */,
 				B1ED822B2B7419C300D7B990 /* FitnessYApp.swift in Sources */,
+				B144CB9E2B7681910060E7E4 /* WorkoutDataFetcher.swift in Sources */,
+				B144CB992B7680850060E7E4 /* TabNavigation.swift in Sources */,
+				B144CB9B2B7680FC0060E7E4 /* Workouts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

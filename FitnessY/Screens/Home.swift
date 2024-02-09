@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Home: View {
-    var hkStore = HealthStore()
+    var hkStore: HealthStore
     @State private var isLoading = true
     @State private var progress = 0.0
 
@@ -54,6 +54,9 @@ struct Home: View {
     }
 }
 
-#Preview {
-    Home()
+struct Home_Previews: PreviewProvider {
+    static var previews: some View {
+        let hkStore = HealthStore()
+        Home(hkStore: hkStore)
+    }
 }

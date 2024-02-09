@@ -17,11 +17,13 @@ class HealthStore {
     var progress = 0
     var standHour = 0
 
-    private let healthStore = HKHealthStore()
+     let healthStore = HKHealthStore()
     private let stepType = HKObjectType.quantityType(forIdentifier: .stepCount)!
     private let exerciseType = HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!
     private let activeEnergyType = HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!
     private let standHourType = HKObjectType.categoryType(forIdentifier: .appleStandHour)!
+    
+   
 
     func requestAccess() async throws {
         guard HKHealthStore.isHealthDataAvailable() else {
@@ -29,7 +31,7 @@ class HealthStore {
         }
 
         return try await withCheckedThrowingContinuation { continuation in
-            healthStore.requestAuthorization(toShare: nil, read: [stepType, exerciseType, activeEnergyType, standHourType, HKObjectType.activitySummaryType()]) { success, error in
+            healthStore.requestAuthorization(toShare: nil, read: [stepType, exerciseType, activeEnergyType, standHourType, HKObjectType.activitySummaryType(), HKObjectType.workoutType()]) { success, error in
                 if let error = error {
                     continuation.resume(throwing: error)
                 } else if success {
@@ -45,6 +47,9 @@ class HealthStore {
             }
         }
     }
+    
+    
+
     
     
 
